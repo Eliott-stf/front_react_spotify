@@ -24,12 +24,12 @@ const Register = () => {
             navigate("/");
         }
     }, [user, navigate])
-
+    
     //Méthode qui receptionne les datas du formulaire
     const handleSubmit = async (event) => {
         event.preventDefault(); //on empeche le comportement naturel du formulaire
     }
-
+    
     return (
         <div className='col w-full min-h-[70vh] px-4 sm:px-6 py-8'>
             <div className="w-full max-w-md animate-slideup2">

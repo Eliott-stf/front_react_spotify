@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import CustomInput from '../../components/Ui/CustomInput';
 import ErrorMessage from '../../components/Ui/ErrorMessage';
 import ButtonLoader from '../../components/Loader/ButtonLoader';
+import { useAuthContext } from '../../contexts/AuthContext';
+import axios from 'axios';
+import { API_ROOT } from '../../constants/apiConstant';
 
 const Login = () => {
 
@@ -14,7 +17,9 @@ const Login = () => {
     const [user, setUser] = useState('');
 
     //on récupère le hook de navigation
-    const navigate = useNavigate
+    const navigate = useNavigate();
+    //on récupère la méthode sign du AuthContext
+    const { signIn } = useAuthContext();
 
     useEffect(() => {
         //si j'ai un utilisateur en session, on le redirige sur '/' du OnlineRouter
@@ -26,6 +31,40 @@ const Login = () => {
     //Méthode qui receptionne les datas du formulaire
     const handleSubmit = async (event) => {
         event.preventDefault(); //on empeche le comportement naturel du formulaire
+        setIsLoading(true); //on passe isLoading a true
+        setErrorMessage(''); //on vide le message d'erreur
+
+        try {
+            //on vérifie que les champs sont bien remplis
+            if (email === '' || password === '') {
+                setErrorMessage("Tous les champs doivent être remplis");
+                return;
+            }
+
+            
+            //on execute la requete sur l'api 
+            const response = await axios.post(`${API_ROOT}/login`, { email, password });
+
+            if (response.data.success === false) {
+                setErrorMessage(response.data.message);
+            } else {
+                //on reconstruit un objet user 
+                const loggedInUser = {
+                    userId: response.data.id,
+                    email: response.data.email,
+                    nickname: response.data.nickname
+                }
+
+                //on appelle la méthode signIN de authcontext pour enregistrer l'utilisateur
+                await signIn(loggedInUser);
+                setUser(loggedInUser);
+            }
+
+        } catch (error) {
+            setErrorMessage("Email ou mot de passe incorrect");
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
