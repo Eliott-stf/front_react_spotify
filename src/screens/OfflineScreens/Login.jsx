@@ -9,7 +9,7 @@ const Login = () => {
     //on délcare nos state pour les valeurs du formulaire
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setEroorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState('');
 
@@ -32,7 +32,7 @@ const Login = () => {
         <div className='col w-full min-h-[70vh] px-4 sm:px-6 py-8'>
             <div className="w-full max-w-md animate-slideup2">
                 <div className="text-center mb-8">
-                    <h1 className="title-h1">Connectez vous</h1>
+                    <h1 className="title-h1">Connectez-vous</h1>
                     <p className="text-gray-300 mt-2 text-sm">Accédez a votre bibliothèque musicale</p>
                 </div>
 
