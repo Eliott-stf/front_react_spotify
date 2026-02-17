@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import CustomInput from '../../components/Ui/CustomInput';
 import ErrorMessage from '../../components/Ui/ErrorMessage';
 import ButtonLoader from '../../components/Loader/ButtonLoader';
+import { useAuthContext } from '../../contexts/AuthContext';
+import axios from 'axios';
+import { API_ROOT } from '../../constants/apiConstant';
 
 const Register = () => {
 
@@ -16,7 +19,9 @@ const Register = () => {
     const [user, setUser] = useState('');
 
     //on récupère le hook de navigation
-    const navigate = useNavigate
+    const navigate = useNavigate();
+    //on récupère la méthode signIn du context
+    const { signIn } = useAuthContext();
 
     useEffect(() => {
         //si j'ai un utilisateur en session, on le redirige sur '/' du OnlineRouter
@@ -24,12 +29,56 @@ const Register = () => {
             navigate("/");
         }
     }, [user, navigate])
-    
+
     //Méthode qui receptionne les datas du formulaire
     const handleSubmit = async (event) => {
         event.preventDefault(); //on empeche le comportement naturel du formulaire
+        setIsLoading(true);
+        setErrorMessage('');
+        try {
+            //verifs
+            if (email === '' || nickname === '' || password === '' || confirmPassword === '') {
+                setErrorMessage("Tout les champs sont obligatoires");
+                return;
+            } else if (password !== confirmPassword) {
+                setErrorMessage("Les mots de passe doivent être identiques");
+                return;
+            } else if (password.length < 4) {
+                setErrorMessage("Le mot de passe doit contenir au moins 4 caractères");
+                return;
+            } else {
+                const response = await axios.post(`${API_ROOT}/register`, {
+                    email,
+                    password,
+                    nickname
+                });
+
+                if (response.data?.success === false) {
+                    setErrorMessage(response.data.message);
+                } else {
+                    const loggedInUser = {
+                        userId: response.data.user.id,
+                        email: response.data.user.email,
+                        nickname: response.data.user.nickname
+                    }
+
+                    //on appelle la méthode signIN de authcontext pour enregistrer l'utilisateur
+                    await signIn(loggedInUser);
+                    setUser(loggedInUser);
+
+                    //on force la redirection vers la plateforme
+                    navigate("/");
+                }
+            }
+
+        } catch (error) {
+            console.log(`Erreur de requete lors de la création du compte: ${error}`);
+            setErrorMessage(error);
+        } finally {
+            setIsLoading(false);
+        }
     }
-    
+
     return (
         <div className='col w-full min-h-[70vh] px-4 sm:px-6 py-8'>
             <div className="w-full max-w-md animate-slideup2">
