@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import ErrorPage from "../screens/ErrorScreens/ErrorPage";
-import Home from "../screens/OnlineScreens/HomeOffline";
+import Home from "../screens/OnlineScreens/Home";
 import App from "../App";
 
 
