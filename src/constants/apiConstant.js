@@ -21,7 +21,7 @@ export const IMAGE_URL = `${API_ROOT}/images`;
 export const AVATAR_URL = `${IMAGE_URL}/avatars`
 
 //Image de cover des albums
-export const COVER_URL = `${API_ROOT}/upload/images/albums`;
+export const ALBUMS_URL = `${API_ROOT}/upload/images/albums`;
 
 //Photos des artistes 
 export const ARTIST_URL = `${API_ROOT}/upload/images/artists`;

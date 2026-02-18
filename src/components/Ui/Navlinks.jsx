@@ -10,6 +10,7 @@ const Navlinks = ({ data, marginTop, handleClick, userId = 0 }) => {
                 <NavLink
                     key={item.title}
                     to={item.path.replace(':id', userId)}
+                    end
                     className={"link-sidebar"}
                     onClick={() => handleClick && handleClick()}
                 >
