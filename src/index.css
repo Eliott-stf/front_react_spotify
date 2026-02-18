@@ -40,6 +40,29 @@
   @apply w-full bg-green hover:bg-green_top text-black font-bold py-3.5 rounded-full transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]
 }
 
+.link-sidebar{
+  @apply w-full flex p-3 items-center rounded-2xl justify-start font-medium text-sm text-white hover:bg-green hover:text-white transition duration-400
+}
+
+.active, .active svg{
+  @apply text-green text-base ms-1 
+}
+
+.active:hover, .active:hover svg{
+  @apply text-white duration-500
+}
+
+::-webkit-scrollbar{
+  width: 10px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb{
+  @apply bg-green_top;
+  border-radius: 5px;
+}
+
+
 
 body{
   background-color: black;
