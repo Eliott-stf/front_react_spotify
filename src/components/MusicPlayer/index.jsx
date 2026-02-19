@@ -5,6 +5,7 @@ import Track from './Track';
 import Controls from './Controls';
 import Seekbar from './Seekbar';
 import Player from './Player';
+import VolumeBar from './VolumeBar';
 
 const MusicPlayer = () => {
 
@@ -101,6 +102,14 @@ const MusicPlayer = () => {
                     onLoadedData={(event) => setDuration(event.target.duration)} // récup la durée de la musqiue
                 />
             </div>
+            {/* la barre de volume */}
+            <VolumeBar
+                value={volume}
+                min="0"
+                max="1"
+                onChange={(event) => setVolume(event.target.value)}
+                setVolume={setVolume}
+            />
         </div>
     )
 }
