@@ -77,12 +77,12 @@ const playerSlice = createSlice({
         /**
          * Bascule entre play et pause
          */
-        PlayPause: (state, action) => {
+        playPause: (state, action) => {
             state.isPlaying = action.payload
         }
     }
 })
 
-export const {setActiveSong, setActiveAlbum, nextSong, prevSong, PlayPause } = playerSlice.actions;
+export const {setActiveSong, setActiveAlbum, nextSong, prevSong, playPause } = playerSlice.actions;
 
 export default playerSlice.reducer;

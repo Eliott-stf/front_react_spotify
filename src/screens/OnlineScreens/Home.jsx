@@ -19,6 +19,8 @@ const Home = () => {
   const { loading, albums } = useSelector(selectAlbumData);
   const dataAlbum = albums.member;
 
+  // on récupère les données du slice player
+  const { activeSong, isPlaying } = useSelector((state) => state.player);
 
 
 
@@ -29,8 +31,12 @@ const Home = () => {
         <div className="flex flex-wrap justify-center sm:justify-start gap-8 mx-2">
           {dataAlbum && dataAlbum.map((data, index) => (
             <AlbumCard
-              key={index}
-              data={data}
+              key={index} //key: chaque enfant de la boucle soit unique 
+              data={data} // data: données de l'album
+              songs={data?.songs} //songs: le tableau de chanson de l'album
+              isPlaying={isPlaying} // isPlaying: l'état si on est en lecture ou pause
+              activeSong= {activeSong} //activeSong: les infos de la chanson en cours de lecture
+              index={0}
             />
           ))}
         </div>
