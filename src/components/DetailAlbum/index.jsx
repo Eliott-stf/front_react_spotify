@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchAlbumDetail } from '../../store/album/albumSlice';
+import HeaderDetail from './HeaderDetail';
 
-const DetailAlbum = () => {
+const DetailAlbum = ({ dataAlbum }) => {
+
 
 
     return (
-        <div>DetailAlbum</div>
+        <>
+            <HeaderDetail dataAlbum={dataAlbum} />
+            
+        </>
     )
 }
 
