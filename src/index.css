@@ -62,9 +62,7 @@
   border-radius: 5px;
 }
 
-
-
-body{
-  background-color: black;
-  color: aliceblue;
+/* collapse transition*/
+.ReactCollapse--collapse{
+  transition: height 1000ms;
 }
