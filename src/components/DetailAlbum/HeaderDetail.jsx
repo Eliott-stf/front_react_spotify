@@ -1,6 +1,7 @@
 import React from 'react'
 import { ALBUMS_URL } from '../../constants/apiConstant'
 import HeaderInfo from './HeaderInfo';
+import HeaderCategory from './HeaderCategory';
 
 const HeaderDetail = ({ dataAlbum }) => {
 
@@ -15,6 +16,7 @@ const HeaderDetail = ({ dataAlbum }) => {
                 <div className="flex flex-col items-center sm:items-start text-center sm:text-left w-full min-w-0">
                     <h1 className='title-h1'>{dataAlbum?.title}</h1>
                     <HeaderInfo dataAlbum={dataAlbum} />
+                    <HeaderCategory dataAlbum={dataAlbum}/>
                 </div>
             </div>
         </div>
