@@ -107,7 +107,7 @@ export const fetchSearch = (search) => async (dispatch) => {
         dispatch(setLoading(true));
         const responseAlbum = await axios.get(`${API_URL}/albums?page=1&title=${search}&isActive=true`)
         const responseTitle = await axios.get(`${API_URL}/albums?songs.title=${search}&isActive=true`)
-        const responseArtist = await axios.get(`${API_URL}/albums?artist.name=${search}&isActive=true`)
+        const responseArtist = await axios.get(`${API_URL}/artists?name=${search}&albums.isActive=true`)
 
         dispatch(setSearchAlbum(responseAlbum.data));
         dispatch(setSearchTitle(responseTitle.data));

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import selectAlbumData from '../../store/album/albumSelector';
 import AlbumCard from '../Card/AlbumCard';
+import ArtistCard from '../Card/ArtistCard';
 
 const SearchView = ({ word }) => {
 
@@ -35,7 +36,7 @@ const SearchView = ({ word }) => {
             <div className="flex flex-wrap">
                 {dataAlbum && dataAlbum.map((data, index) => (
                     <div className="p-3 m-3" key={`album_${index}`}>
-                        <AlbumCard 
+                        <AlbumCard
                             isPlaying={isPlaying}
                             activeSong={activeSong}
                             data={data}
@@ -46,6 +47,37 @@ const SearchView = ({ word }) => {
                 ))}
             </div>
 
+            {/* partie Artist */}
+            {dataArtist && dataArtist?.length > 0
+                ? (<h2 className='ml-6 text-2xl font-bold text-white mb-6'>Artistes <span className="text-gray-400">({dataArtist.length})</span></h2>)
+                : null
+            }
+            <div className="flex flex-wrap">
+                {dataArtist && dataArtist.map((data, index) => (
+                    <div className="p-3 m-3" key={`artist_${index}`}>
+                        <ArtistCard dataArtist={data} />
+                    </div>
+                ))}
+            </div>
+
+            {/* partie titre */}
+            {dataTitle && dataTitle?.length > 0
+                ? (<h2 className='ml-6 text-2xl font-bold text-white mb-6'>Titre <span className="text-gray-400">({dataTitle.length})</span></h2>)
+                : null
+            }
+            <div className="flex flex-wrap">
+                {dataTitle && dataTitle.map((data, index) => (
+                    <div className="p-3 m-3" key={`song_${index}`}>
+                        <AlbumCard
+                            isPlaying={isPlaying}
+                            activeSong={activeSong}
+                            data={data}
+                            index={0}
+                            songs={data?.songs}
+                        />
+                    </div>
+                ))}
+            </div>
         </>
     )
 }
