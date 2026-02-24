@@ -8,7 +8,10 @@ const albumSlice = createSlice({
         loading: false,
         albums: [],
         albumDetail: {},
-        albumByGenre: []
+        albumByGenre: [],
+        searchAlbum: [],
+        searchTitle: [],
+        searchArtist: [],
     },
     reducers: {
         setLoading: (state, action) => {
@@ -22,11 +25,20 @@ const albumSlice = createSlice({
         },
         setAlbumByGenre: (state, action) => {
             state.albumByGenre = action.payload
+        },
+        setSearchAlbum: (state, action) => {
+            state.searchAlbum = action.payload
+        },
+        setSearchTitle: (state, action) => {
+            state.searchTitle = action.payload
+        },
+        setSearchArtist: (state, action) => {
+            state.searchArtist = action.payload
         }
     }
 })
 
-export const { setLoading, setAlbums, setAlbumDetail, setAlbumByGenre } = albumSlice.actions;
+export const { setLoading, setAlbums, setAlbumDetail, setAlbumByGenre, setSearchAlbum, setSearchTitle, setSearchArtist } = albumSlice.actions;
 
 /**
  * ===============================
@@ -89,6 +101,32 @@ export const fetchAlbumByGenre = (genreArray) => async (dispatch) => {
     }
 }
 
+//méthode pour faire une recherche
+export const fetchSearch = (search) => async (dispatch) => {
+    try {
+        dispatch(setLoading(true));
+        const responseAlbum = await axios.get(`${API_URL}/albums?page=1&title=${search}&isActive=true`)
+        const responseTitle = await axios.get(`${API_URL}/albums?songs.title=${search}&isActive=true`)
+        const responseArtist = await axios.get(`${API_URL}/albums?artist.name=${search}&isActive=true`)
 
+        dispatch(setSearchAlbum(responseAlbum.data));
+        dispatch(setSearchTitle(responseTitle.data));
+        dispatch(setSearchArtist(responseArtist.data));
+
+    } catch (error) {
+        console.log(`Erreur lors de la recherche : ${error}`);
+
+    } finally {
+        dispatch(setLoading(false));
+
+    }
+}
+
+//méthode qui reset la recherche
+export const fetchResetSearch = () => async (dispatch) => {
+    dispatch(setSearchAlbum([]));
+    dispatch(setSearchTitle([]));
+    dispatch(setSearchArtist([]));
+}
 
 export default albumSlice.reducer;
