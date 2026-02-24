@@ -1,13 +1,14 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import AlbumCard from '../Card/AlbumCard';
+import selectAlbumData from '../../store/album/albumSelector';
+import PageLoader from '../Loader/PageLoader';
 
 const AlbumSuggestion = ({ albumByGenre }) => {
 
     const { isPlaying, activeSong } = useSelector((state) => state.player)
 
     if (!albumByGenre?.length) return null;
-
 
     return (
         <div className='w-full px-4 sm:px-6 lg:px-8 pt-10 pb-16'>
