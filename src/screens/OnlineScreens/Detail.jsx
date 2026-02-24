@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAlbumDetail } from '../../store/album/albumSlice';
+import { fetchAlbumByGenre, fetchAlbumDetail } from '../../store/album/albumSlice';
 import { useParams } from 'react-router-dom';
 import selectAlbumData from '../../store/album/albumSelector';
 import PageLoader from '../../components/Loader/PageLoader';
 import DetailAlbum from '../../components/DetailAlbum';
 
 const Detail = () => {
+
+
+  //on récupère les données des détails de l'albums et le loading avec useSelector
+  const { loading, albumDetail, albumByGenre } = useSelector(selectAlbumData);
 
   //const pour récupérer l'id 
   const params = useParams();
@@ -21,11 +25,13 @@ const Detail = () => {
     dispatch(fetchAlbumDetail(id));
   }, [dispatch, id])
 
-  //on récupère les données des détails de l'albums et le loading avec useSelector
-  const { loading, albumDetail } = useSelector(selectAlbumData);
+  useEffect(() => {
+    // on dispatch la méthode fetchAlbumByGenre pour récupérer les albums en bdd
+    dispatch(fetchAlbumByGenre(albumDetail?.genre))
+  }, [dispatch, albumDetail?.genre])
 
   return (
-    loading ? <PageLoader /> : <DetailAlbum dataAlbum={albumDetail} />
+    loading ? <PageLoader /> : <DetailAlbum dataAlbum={albumDetail} albumByGenre={albumByGenre} />
   )
 }
 
